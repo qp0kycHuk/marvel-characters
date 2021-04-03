@@ -1,0 +1,2 @@
+export const FETCH_CHARACTERS = 'FETCH_CHARACTERS';
+export const GET_CHARACTER = 'GET_CHARACTER';
