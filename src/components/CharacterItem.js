@@ -7,31 +7,37 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   name: {
-
+    textDecoration: 'none'
   },
   desc: {
-
+    textDecoration: 'none'
   },
+  link: {
+    textDecoration: 'none',
+    height:'100%'
+  },
+  card:{
+    height:'100%' 
+  }
 }))
 
-export function CharacterItem() {
+export function CharacterItem({ character }) {
   const classes = useStyles();
 
-  const name = 'name';
-  const desc = 'desc';
-  const id = 'name-of-character';
+
+
 
   return (
-    <Link to={'/detail/' + id}>
-      <Card>
+    <Link to={'/character/' + character.id} className={classes.link}>
+      <Card  className={classes.card}>
         <CardMedia
-          image="https://picsum.photos/id/684/600/400"
-          height="140"
+          image={character.thumbnail.path + '.' + character.thumbnail.extension}
+          height="300"
           component="img"
         ></CardMedia>
         <CardContent>
-          <Typography variant="h4" noWrap className={classes.name}>{name}</Typography>
-          <Typography variant="p" noWrap className={classes.desc}>{desc}</Typography>
+          <Typography variant="h6" noWrap className={classes.name}>{character.name}</Typography>
+          <Typography noWrap className={classes.desc}>{character.description}</Typography>
         </CardContent>
       </Card>
     </Link>

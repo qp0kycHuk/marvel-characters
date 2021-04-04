@@ -2,15 +2,26 @@
 
 
 
-const apiUrl = 'https://gateway.marvel.com:443';
-const charactersApiUrl = apiUrl + '/v1/public/characters'
-const publicKey = 'c18dd05f55dc0273c7a347014d661725';
-const privateKey = 'f9d47ee1d41f60fc73cd7d0b31d492586f4d88ed';
+const apiUrl = 'https://web-jedi.ru/dev.marvel';
+const charactersApiUrl = apiUrl + '/fetchCharacters.php'
 
-console.log(charactersApiUrl + '?apikey=' + publicKey);
-export const character = {
-  fetch: () => {
-    return fetch(charactersApiUrl + '?apikey=' + publicKey)
+
+class CharacterFetch {
+  fetch(options = { offset: 0 }) {
+    let url = charactersApiUrl + '?offset=' + options.offset;
+    if (options.id) url += '&id=' + options.id;
+    if (options.search) url += '&search=' + options.search;
+
+    return fetch(url)
       .then((response) => response.json())
+      .then((response) => {
+        if (response.code == 200) {
+          this.offset = response.data.offset + response.data.count;
+          return response.data
+        }
+      })
   }
 }
+
+
+export const character = new CharacterFetch();
